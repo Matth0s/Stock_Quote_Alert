@@ -55,19 +55,40 @@ namespace StockQuoteAlert
 
         public void SendQuoteHigh()
         {
-            _smtpClient.Send(this.CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
+            try
+            {
+                _smtpClient.Send(this.CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Erro ao enviar email em: [{DateTime.Now}]");
+            }
         }
 
         public void SendQuoteStable()
         {
-            _smtpClient.Send(
-                this.CreateMessage($"Estabilidade de {_stockCode} em [{DateTime.Now}]")
-            );
+            try
+            {
+                _smtpClient.Send(
+                    this.CreateMessage($"Estabilidade de {_stockCode} em [{DateTime.Now}]")
+                );
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Erro ao enviar email em: [{DateTime.Now}]");
+            }
         }
 
         public void SendQuoteLow()
         {
-            _smtpClient.Send(this.CreateMessage($"Baixa de {_stockCode} em [{DateTime.Now}]"));
+            try
+            {
+                _smtpClient.Send(this.CreateMessage($"Baixa de {_stockCode} em [{DateTime.Now}]"));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Erro ao enviar email em: [{DateTime.Now}]");
+            }
         }
     }
 }
