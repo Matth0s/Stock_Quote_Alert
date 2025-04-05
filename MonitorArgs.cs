@@ -4,7 +4,7 @@ namespace StockQuoteAlert
 {
     class MonitorArgs
     {
-        public string Acao { get; private set; }
+        public string StockCode { get; private set; }
         public double High { get; private set; }
         public double Low { get; private set; }
 
@@ -12,7 +12,7 @@ namespace StockQuoteAlert
         {
             try
             {
-                Acao = args[0];
+                StockCode = args[0];
                 double value1 = double.Parse(args[1]);
                 double value2 = double.Parse(args[2]);
 
@@ -49,7 +49,7 @@ namespace StockQuoteAlert
 
         public override string ToString()
         {
-            return $"Acao: {Acao}\nHigh: {High}\nLow: {Low}";
+            return $"Acao: {StockCode}\nHigh: {High}\nLow: {Low}";
         }
     }
 }

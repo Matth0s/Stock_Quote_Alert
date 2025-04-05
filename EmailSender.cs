@@ -11,13 +11,13 @@ namespace StockQuoteAlert
         private SmtpClient _smtpClient;
         private string _from;
         private string _to;
-        private string _acao;
+        private string _stockCode;
 
-        public EmailSender(ConfigSMTP configSMTP, string acao)
+        public EmailSender(ConfigSMTP configSMTP, string stockCode)
         {
             try
             {
-                _acao = acao;
+                _stockCode = stockCode;
                 _smtpClient = new SmtpClient(configSMTP.Host, configSMTP.Port);
                 _smtpClient.EnableSsl = true;
                 _smtpClient.UseDefaultCredentials = false;
@@ -28,7 +28,11 @@ namespace StockQuoteAlert
                 _from = configSMTP.Username;
                 _to = configSMTP.Receiver;
 
-                _smtpClient.Send(this.CreateMessage($"Iniciando Monitoramento de {_acao}"));
+                _smtpClient.Send(
+                    this.CreateMessage(
+                        $"Iniciando Monitoramento de {_stockCode} em [{DateTime.Now}]"
+                    )
+                );
             }
             catch (Exception ex)
             {
@@ -51,17 +55,19 @@ namespace StockQuoteAlert
 
         public void SendQuoteHight()
         {
-            _smtpClient.Send(this.CreateMessage($"Alta de {_acao}"));
+            _smtpClient.Send(this.CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
         }
 
         public void SendQuoteStable()
         {
-            _smtpClient.Send(this.CreateMessage($"Estabilidade de {_acao}"));
+            _smtpClient.Send(
+                this.CreateMessage($"Estabilidade de {_stockCode} em [{DateTime.Now}]")
+            );
         }
 
         public void SendQuoteLow()
         {
-            _smtpClient.Send(this.CreateMessage($"Baixa de {_acao}"));
+            _smtpClient.Send(this.CreateMessage($"Baixa de {_stockCode} em [{DateTime.Now}]"));
         }
     }
 }
