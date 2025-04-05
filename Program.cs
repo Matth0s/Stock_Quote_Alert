@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace StockQuoteAlert
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			ConfigSMTP configSMTP = new ConfigSMTP();
+
+			Console.WriteLine(configSMTP);
+		}
+	}
+}
