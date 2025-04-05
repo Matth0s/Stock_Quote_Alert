@@ -8,13 +8,13 @@ namespace StockQuoteAlert
 		{
 			ConfigSMTP configSMTP = new ConfigSMTP();
 
-			Console.WriteLine(configSMTP);
-
-			EmailSender emailSender = new EmailSender(configSMTP);
+			EmailSender emailSender = new EmailSender(configSMTP, "Ação");
 
 			emailSender.SendQuoteLow();
-			emailSender.SendQuoteStable();
 			emailSender.SendQuoteHight();
+			emailSender.SendQuoteStable();
+
+			Console.WriteLine(configSMTP);
 		}
 	}
 }
