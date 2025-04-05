@@ -53,7 +53,7 @@ namespace StockQuoteAlert
             return mailMessage;
         }
 
-        public void SendQuoteHight()
+        public void SendQuoteHigh()
         {
             _smtpClient.Send(this.CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
         }
