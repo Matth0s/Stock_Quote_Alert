@@ -46,7 +46,7 @@ namespace StockQuoteAlert
 
         public override string ToString()
         {
-            return $"Receiver: {Receiver}\nHost: {Host}\nPort: {Port}\nUsername: {Username}";
+            return $"Configuracoes Servidor SMTP:\n  - Receiver: {Receiver}\n  - Host: {Host}\n  - Port: {Port}\n  - Username: {Username}";
         }
     }
 }

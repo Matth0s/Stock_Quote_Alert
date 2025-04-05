@@ -13,8 +13,8 @@ namespace StockQuoteAlert
             try
             {
                 StockCode = args[0];
-                double value1 = double.Parse(args[1]);
-                double value2 = double.Parse(args[2]);
+                double value1 = double.Parse(args[1].Replace('.', ','));
+                double value2 = double.Parse(args[2].Replace('.', ','));
 
                 if (value1 > value2)
                 {
@@ -49,7 +49,7 @@ namespace StockQuoteAlert
 
         public override string ToString()
         {
-            return $"Acao: {StockCode}\nHigh: {High}\nLow: {Low}";
+            return $"Parametros de Monitoramento:\n  - StockCode: {StockCode}\n  - High: {High:F2}\n  - Low: {Low:F2}";
         }
     }
 }
