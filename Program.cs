@@ -20,6 +20,7 @@ namespace StockQuoteAlert
             RequestQuote requestQuote = new RequestQuote(monitorArgs.StockCode);
             await requestQuote.ValidadeStockCode();
             EmailSender emailSender = new EmailSender(configSMTP, monitorArgs.StockCode);
+            SleepController sleepController = new SleepController();
 
             Console.WriteLine("/¨¨¨¨¨¨¨¨¨¨ Iniciando Monitoramento ¨¨¨¨¨¨¨¨¨¨\\");
             Console.WriteLine(monitorArgs);
@@ -62,7 +63,7 @@ namespace StockQuoteAlert
 
                 lastSatus = currentStatus;
 
-                Thread.Sleep(60000);
+                sleepController.Sleep();
             }
         }
     }
