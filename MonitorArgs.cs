@@ -12,7 +12,7 @@ namespace StockQuoteAlert
         {
             try
             {
-                StockCode = args[0];
+                StockCode = args[0].ToUpper();
                 double value1 = double.Parse(args[1].Replace('.', ','));
                 double value2 = double.Parse(args[2].Replace('.', ','));
 

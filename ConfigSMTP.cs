@@ -17,7 +17,6 @@ namespace StockQuoteAlert
             try
             {
                 string[] fileLines = File.ReadAllLines(_filePath);
-
                 Receiver = fileLines[0];
                 Host = fileLines[1];
                 Port = int.Parse(fileLines[2]);

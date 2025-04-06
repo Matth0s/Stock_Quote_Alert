@@ -6,27 +6,27 @@ using System.Text;
 
 namespace StockQuoteAlert
 {
-    class EmailSender
+    class EmailSender : ISender
     {
+        public ConfigSMTP Configs { get; private set; }
         private SmtpClient _smtpClient;
-        private string _from;
-        private string _to;
-        private string _stockCode;
+        private readonly string _from;
+        private readonly string _to;
+        private readonly string _stockCode;
 
-        public EmailSender(ConfigSMTP configSMTP, string stockCode)
+        public EmailSender(string stockCode)
         {
+            Configs = new ConfigSMTP();
+
             try
             {
                 _stockCode = stockCode;
-                _smtpClient = new SmtpClient(configSMTP.Host, configSMTP.Port);
+                _smtpClient = new SmtpClient(Configs.Host, Configs.Port);
                 _smtpClient.EnableSsl = true;
                 _smtpClient.UseDefaultCredentials = false;
-                _smtpClient.Credentials = new NetworkCredential(
-                    configSMTP.Username,
-                    configSMTP.Password
-                );
-                _from = configSMTP.Username;
-                _to = configSMTP.Receiver;
+                _smtpClient.Credentials = new NetworkCredential(Configs.Username, Configs.Password);
+                _from = Configs.Username;
+                _to = Configs.Receiver;
 
                 _smtpClient.Send(
                     this.CreateMessage(

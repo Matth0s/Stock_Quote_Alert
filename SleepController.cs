@@ -28,9 +28,7 @@ namespace StockQuoteAlert
         {
             int days;
             DateTime now = DateTime.Now;
-
-            // Verifica se a proxima abertura da B3 será no dia seguinte
-            if (
+            if ( // Verifica se a proxima abertura da B3 será no dia seguinte
                 now.DayOfWeek >= DayOfWeek.Monday
                 && now.DayOfWeek <= DayOfWeek.Thursday
                 && now.TimeOfDay >= new TimeSpan(17, 00, 0)
@@ -39,8 +37,7 @@ namespace StockQuoteAlert
             {
                 days = 1;
             }
-            // Verifica se a proxima abertura da B3 será ainda naquele dia pela manhã
-            else if (
+            else if ( // Verifica se a proxima abertura da B3 será ainda naquele dia pela manhã
                 now.DayOfWeek >= DayOfWeek.Tuesday
                 && now.DayOfWeek <= DayOfWeek.Friday
                 && now.TimeOfDay >= new TimeSpan(0, 0, 0)
@@ -49,12 +46,10 @@ namespace StockQuoteAlert
             {
                 days = 0;
             }
-            // Verifica se a abertura da B3 será somente na proxima segunda depois do fim de semana
-            else
+            else // Verifica se a abertura da B3 será somente na proxima segunda depois do fim de semana
             {
                 days = (7 + DayOfWeek.Monday - now.DayOfWeek) % 7;
             }
-
             return (DateTime.Today.AddDays(days).AddHours(10) - now).TotalMilliseconds;
         }
 
