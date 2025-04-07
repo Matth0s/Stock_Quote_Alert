@@ -7,18 +7,18 @@ namespace StockQuoteAlert
     {
         static async Task Main(string[] args)
         {
-            RequestQuote requestQuote = new RequestQuote(args);
-            await requestQuote.ValidadeStockCode();
+            MonitorQuoteController monitorQuoteController = new MonitorQuoteController(args);
+            await monitorQuoteController.ValidadeStockCode();
 
-            EmailSender emailSender = new EmailSender(requestQuote.Args.StockCode);
-            requestQuote.Sender = emailSender;
+            EmailSender emailSender = new EmailSender(monitorQuoteController.Args.StockCode);
+            monitorQuoteController.Sender = emailSender;
 
             Console.WriteLine("/¨¨¨¨¨¨¨¨¨¨ Iniciando Monitoramento ¨¨¨¨¨¨¨¨¨¨\\");
-            Console.WriteLine(requestQuote.Args);
+            Console.WriteLine(monitorQuoteController.Args);
             Console.WriteLine(emailSender.Configs);
             Console.WriteLine("\\_____________________________________________/");
 
-            await requestQuote.MonitorQuote();
+            await monitorQuoteController.MonitorQuote();
         }
     }
 }

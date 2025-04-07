@@ -29,9 +29,7 @@ namespace StockQuoteAlert
                 _to = Configs.Receiver;
 
                 _smtpClient.Send(
-                    this.CreateMessage(
-                        $"Iniciando Monitoramento de {_stockCode} em [{DateTime.Now}]"
-                    )
+                    CreateMessage($"Iniciando Monitoramento de {_stockCode} em [{DateTime.Now}]")
                 );
             }
             catch (Exception ex)
@@ -57,7 +55,7 @@ namespace StockQuoteAlert
         {
             try
             {
-                _smtpClient.Send(this.CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
+                _smtpClient.Send(CreateMessage($"Alta de {_stockCode} em [{DateTime.Now}]"));
             }
             catch (Exception)
             {
@@ -70,7 +68,7 @@ namespace StockQuoteAlert
             try
             {
                 _smtpClient.Send(
-                    this.CreateMessage($"Estabilidade de {_stockCode} em [{DateTime.Now}]")
+                    CreateMessage($"Estabilidade de {_stockCode} em [{DateTime.Now}]")
                 );
             }
             catch (Exception)
@@ -83,7 +81,7 @@ namespace StockQuoteAlert
         {
             try
             {
-                _smtpClient.Send(this.CreateMessage($"Baixa de {_stockCode} em [{DateTime.Now}]"));
+                _smtpClient.Send(CreateMessage($"Baixa de {_stockCode} em [{DateTime.Now}]"));
             }
             catch (Exception)
             {
