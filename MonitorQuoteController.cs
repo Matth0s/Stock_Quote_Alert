@@ -14,17 +14,20 @@ namespace StockQuoteAlert
     class MonitorQuoteController
     {
         public MonitorArgs Args { get; private set; }
-        public string YahooStockCode { get; private set; }
+        public Yahoo YahooStock { get; private set; }
         public double Quote { get; private set; }
         public ISender? Sender { get; set; }
 
         public MonitorQuoteController(string[] args)
         {
             Args = new MonitorArgs(args);
-            YahooStockCode = Args.StockCode;
-            if (!YahooStockCode.EndsWith(".SA"))
+            if (Args.StockCode.EndsWith(".SA"))
             {
-                YahooStockCode += ".SA";
+                YahooStock = Yahoo.Symbols(Args.StockCode).Fields(Field.RegularMarketPrice);
+            }
+            else
+            {
+                YahooStock = Yahoo.Symbols(Args.StockCode + ".SA").Fields(Field.RegularMarketPrice);
             }
             Quote = 0;
             Sender = null;
@@ -34,12 +37,8 @@ namespace StockQuoteAlert
         {
             try
             {
-                IReadOnlyDictionary<string, Security> securities = await Yahoo
-                    .Symbols(YahooStockCode)
-                    .Fields(Field.RegularMarketPrice)
-                    .QueryAsync();
-                Security stock = securities[YahooStockCode];
-                Quote = stock[Field.RegularMarketPrice];
+                IReadOnlyDictionary<string, Security> securities = await YahooStock.QueryAsync();
+                Quote = securities.Values.First()[Field.RegularMarketPrice];
             }
             catch (KeyNotFoundException)
             {
@@ -59,12 +58,8 @@ namespace StockQuoteAlert
         {
             try
             {
-                IReadOnlyDictionary<string, Security> securities = await Yahoo
-                    .Symbols(YahooStockCode)
-                    .Fields(Field.RegularMarketPrice)
-                    .QueryAsync();
-                Security stock = securities[YahooStockCode];
-                Quote = stock[Field.RegularMarketPrice];
+                IReadOnlyDictionary<string, Security> securities = await YahooStock.QueryAsync();
+                Quote = securities.Values.First()[Field.RegularMarketPrice];
             }
             catch (Exception)
             {
