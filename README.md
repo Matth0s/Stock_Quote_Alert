@@ -19,7 +19,7 @@ Abra um terminal na pasta raiz do projeto e execute o seguinte comando:
 
 **Comando para build:**
 ```cmd
-dotnet publish --output . --runtime win-x64 --configuration Release --self-contained true -p:AssemblyName=stock-quote-alert -p:PublishSingleFile=true -p:DebugType=None
+dotnet publish StockQuoteAlert.csproj --output . --runtime win-x64 --configuration Release --self-contained true -p:AssemblyName=stock-quote-alert -p:PublishSingleFile=true -p:DebugType=None
 ```
 ## Como Executar:
 
