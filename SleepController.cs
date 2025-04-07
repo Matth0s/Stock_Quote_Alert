@@ -24,33 +24,27 @@ namespace StockQuoteAlert
             }
         }
 
-        private double TimeToNextOpen()
+        private int TimeToNextOpen()
         {
-            int days;
             DateTime now = DateTime.Now;
-            if ( // Verifica se a proxima abertura da B3 será no dia seguinte
-                now.DayOfWeek >= DayOfWeek.Monday
-                && now.DayOfWeek <= DayOfWeek.Thursday
-                && now.TimeOfDay >= new TimeSpan(17, 00, 0)
-                && now.TimeOfDay <= new TimeSpan(23, 59, 59)
-            )
+            DateTime nextOpenTime = DateTime.Today.AddHours(10);
+
+            if (now > nextOpenTime) // Significa que a proxima abertura sera no dia seguinte
             {
-                days = 1;
+                nextOpenTime = nextOpenTime.AddDays(1);
             }
-            else if ( // Verifica se a proxima abertura da B3 será ainda naquele dia pela manhã
-                now.DayOfWeek >= DayOfWeek.Tuesday
-                && now.DayOfWeek <= DayOfWeek.Friday
-                && now.TimeOfDay >= new TimeSpan(0, 0, 0)
-                && now.TimeOfDay <= new TimeSpan(9, 59, 59)
-            )
+
+            // Se o dia da proxima abertura for um fim de semana, move para a proxima segunda feira
+            if (nextOpenTime.DayOfWeek == DayOfWeek.Saturday)
             {
-                days = 0;
+                nextOpenTime = nextOpenTime.AddDays(2);
             }
-            else // Verifica se a abertura da B3 será somente na proxima segunda depois do fim de semana
+            else if (nextOpenTime.DayOfWeek == DayOfWeek.Sunday)
             {
-                days = (7 + DayOfWeek.Monday - now.DayOfWeek) % 7;
+                nextOpenTime = nextOpenTime.AddDays(1);
             }
-            return (DateTime.Today.AddDays(days).AddHours(10) - now).TotalMilliseconds;
+
+            return (int)(nextOpenTime - now).TotalMilliseconds;
         }
 
         public void Sleep()
@@ -59,13 +53,13 @@ namespace StockQuoteAlert
             if (_timeToNextClose > 0)
             {
                 _timeToNextClose -= 60000;
-                Thread.Sleep(59000); // Compensando o tempo de excecução de 1s do algoritmo na Main
+                Thread.Sleep(60000);
             }
             // Caso contrario, reseta o valor de _timeToNextClose e pausa até a proxima abertura da B3
             else
             {
                 _timeToNextClose = 25200000; // Milissegundos entre 10h e 17h30
-                Thread.Sleep((int)TimeToNextOpen());
+                Thread.Sleep(TimeToNextOpen());
             }
         }
     }
